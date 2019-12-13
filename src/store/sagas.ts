@@ -1,6 +1,12 @@
-import { all } from 'redux-saga/effects';
+import { all, fork } from 'redux-saga/effects';
 
-function* rootSaga() {
-  yield all([]);
+const sagas = [];
+
+function* globalSagas() {
+  const globalSagasForks = sagas.map(saga => fork(saga));
+
+  yield all([...globalSagasForks]);
 }
-export default rootSaga;
+
+export default globalSagas;
+
